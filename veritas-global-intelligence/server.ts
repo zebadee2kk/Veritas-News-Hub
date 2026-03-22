@@ -11,7 +11,16 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = parseInt(process.env.PORT || "3000", 10);
+
+  // CORS — allow the Cloudflare Pages frontend
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", process.env.CORS_ORIGIN || "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    if (req.method === "OPTIONS") return res.sendStatus(200);
+    next();
+  });
 
   app.use(express.json());
 
