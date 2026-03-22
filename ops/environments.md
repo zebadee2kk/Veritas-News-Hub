@@ -29,7 +29,18 @@
 
 ## Deployment Notes
 
-Production deployment target is not finalized in this repository yet.
+Deployment target is defined as:
+
+- Frontend: Cloudflare Pages (`app.<domain>`)
+- Backend API: VPS with Nginx + PM2 (`api.<domain>`)
+
+Execution references:
+
+- `docs/playbooks/deployment.md`
+- `ops/runbook-vps-cloudflare.md`
+- `ops/checklists/handoff.md`
+- `ops/checklists/go-live.md`
+- `ops/checklists/rollback.md`
 
 Current runtime assumptions:
 - App entrypoint is `veritas-global-intelligence/server.ts`.

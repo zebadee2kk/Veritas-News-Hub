@@ -4,8 +4,10 @@
 
 - [x] Replace template/default repository docs with project-specific documentation.
 - [x] Align architecture, ops, security, and AI context docs to the current app.
+- [x] Add deployment playbook, runbook, and go-live/rollback/handoff checklists.
 - [ ] Complete CI workflow alignment for nested app path (`veritas-global-intelligence`).
 - [ ] Add baseline tests for `server.ts` endpoints and Truth Index scoring.
+- [ ] Execute VPS + Cloudflare deployment using documented runbook once access is available.
 
 ## Phase 1 - Core Foundation (In Progress)
 
@@ -34,7 +36,7 @@
 
 ## Phase 4 - Deployment And Scale
 
-- [ ] Define target production platform and deployment pipeline.
+- [x] Define target production platform (Cloudflare Pages + VPS API) and deployment runbook.
 - [ ] Add environment-specific configuration and secret management policy.
 - [ ] Add uptime, latency, and error-budget monitoring.
 - [ ] Add rate-limit strategy and abuse protections for public-facing deployment.

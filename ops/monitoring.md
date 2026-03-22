@@ -31,6 +31,11 @@ Monitoring is currently basic and log-driven in local/runtime output. No central
 
 ## Runbooks
 
-- News ingestion degraded: verify `NEWS_API_KEY`, quota, and upstream NewsAPI status.
-- Analysis degraded: verify `GEMINI_API_KEY` and provider availability.
-- Map unavailable: verify `GOOGLE_MAPS_PLATFORM_KEY` and Maps API enablement.
+- Primary deployment runbook: `ops/runbook-vps-cloudflare.md`.
+- Handoff prerequisites: `ops/checklists/handoff.md`.
+- Go-live verification: `ops/checklists/go-live.md`.
+- Rollback procedure: `ops/checklists/rollback.md`.
+- Incident quick checks:
+	- News ingestion degraded: verify `NEWS_API_KEY`, quota, and upstream NewsAPI status.
+	- Analysis degraded: verify `GEMINI_API_KEY` and provider availability.
+	- Map unavailable: verify `GOOGLE_MAPS_PLATFORM_KEY` and Maps API enablement.

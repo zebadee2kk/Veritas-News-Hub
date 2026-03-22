@@ -7,6 +7,8 @@
 | CI | `.github/workflows/ci.yml` | Push and PR on configured branches | Lint and test Node/Python projects when detected |
 | Security Scan | `.github/workflows/security-scan.yml` | Push, PR, and weekly schedule | CodeQL analysis for JavaScript and Python |
 | Stale Cleanup | `.github/workflows/stale.yml` | Daily schedule | Mark and close inactive issues/PRs |
+| Frontend Deploy (planned) | `.github/workflows/deploy-frontend.yml` | Push to `master` | Build and deploy frontend to Cloudflare Pages |
+| Backend Deploy (planned) | `.github/workflows/deploy-backend.yml` | Push to `master` | Deploy backend to VPS via SSH |
 
 ## Pipeline Details
 
@@ -29,11 +31,28 @@
 - **Trigger:** Daily cron schedule.
 - **Action:** Labels stale issues/PRs and closes after configured inactivity window.
 
+### Frontend Deploy (Planned)
+
+- **Target:** Cloudflare Pages
+- **Expected steps:** install, build (`veritas-global-intelligence`), deploy, smoke check.
+
+### Backend Deploy (Planned)
+
+- **Target:** VPS host behind Nginx
+- **Expected steps:** checkout, install, restart PM2 process, health check.
+
 ## Secrets Required
 
 | Secret | Where Set | Purpose |
 |--------|-----------|--------|
-| None required for current workflow definitions | GitHub repository settings | CI and CodeQL run without app runtime API keys |
+| `VPS_HOST` | GitHub Actions secrets | Target backend server address |
+| `VPS_PORT` | GitHub Actions secrets | SSH port for deployment |
+| `VPS_USER` | GitHub Actions secrets | SSH user for deployment |
+| `SSH_PRIVATE_KEY` | GitHub Actions secrets | Non-interactive SSH authentication |
+| `CLOUDFLARE_API_TOKEN` | GitHub Actions secrets | Cloudflare Pages/DNS deploy actions |
+| `CLOUDFLARE_ACCOUNT_ID` | GitHub Actions secrets | Cloudflare account scoping |
+
+Current committed workflows do not yet consume these secrets; they are for planned deployment workflows.
 
 ## Manual Triggers
 

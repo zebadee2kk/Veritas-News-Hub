@@ -75,9 +75,15 @@ From [veritas-global-intelligence/package.json](veritas-global-intelligence/pack
 - [ARCHITECTURE.md](ARCHITECTURE.md)
 - [PROJECT_STATUS.md](PROJECT_STATUS.md)
 - [ROADMAP.md](ROADMAP.md)
+- [DEPLOYMENT_READY.md](DEPLOYMENT_READY.md)
 - [docs/playbooks/development.md](docs/playbooks/development.md)
+- [docs/playbooks/deployment.md](docs/playbooks/deployment.md)
 - [docs/playbooks/security.md](docs/playbooks/security.md)
 - [ops/environments.md](ops/environments.md)
+- [ops/runbook-vps-cloudflare.md](ops/runbook-vps-cloudflare.md)
+- [ops/checklists/handoff.md](ops/checklists/handoff.md)
+- [ops/checklists/go-live.md](ops/checklists/go-live.md)
+- [ops/checklists/rollback.md](ops/checklists/rollback.md)
 
 ## Contributing And Security
 
