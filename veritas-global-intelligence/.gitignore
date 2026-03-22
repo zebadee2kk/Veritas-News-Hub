@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# SQLite database (persisted on VPS, never in repo)
+data/
+*.db
+*.db-shm
+*.db-wal

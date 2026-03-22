@@ -2,23 +2,56 @@
 
 This runbook is intended for direct execution when access is available.
 
-## 1. Variables To Set Locally
+## Access Topology
+
+```
+You → lxc-webhost365-core (webadmin) → VPS
+```
+
+- **Jump host:** `lxc-webhost365-core`, username `webadmin`
+- **Cloudflare API:** available from inside the jump host
+- **VPS connection:** defined in `~/.ssh/config` on the jump host — `cat ~/.ssh/config` to get VPS hostname, port, and user
+
+## 1. Connect To Jump Host First
 
 ```bash
-export VPS_HOST=""
-export VPS_PORT="22"
-export VPS_USER=""
+# Step 1: SSH to jump host
+ssh webadmin@lxc-webhost365-core
+
+# On the jump host, check the SSH config for the VPS alias
+cat ~/.ssh/config
+# Note the VPS Host alias, HostName, User, Port, IdentityFile
+
+# Step 2: From jump host, SSH to VPS
+ssh <vps-alias-from-config>
+```
+
+Or jump directly from your local machine using ProxyJump:
+
+```bash
+ssh -J webadmin@lxc-webhost365-core -p "$VPS_PORT" "$VPS_USER@$VPS_HOST"
+```
+
+## 2. Variables To Set Locally
+
+```bash
+export JUMP_HOST="lxc-webhost365-core"
+export JUMP_USER="webadmin"
+export VPS_HOST=""   # from ~/.ssh/config on jump host
+export VPS_PORT="22" # from ~/.ssh/config on jump host
+export VPS_USER=""   # from ~/.ssh/config on jump host
 export DOMAIN="example.com"
 export APP_HOST="app.${DOMAIN}"
 export API_HOST="api.${DOMAIN}"
-export CF_TOKEN=""
-export CF_ACCOUNT_ID=""
+export CF_TOKEN=""         # available from lxc-webhost365-core
+export CF_ACCOUNT_ID=""    # available from lxc-webhost365-core
 ```
 
-## 2. VPS Base Provisioning
+## 3. VPS Base Provisioning
 
 ```bash
-ssh -p "$VPS_PORT" "$VPS_USER@$VPS_HOST"
+# SSH to VPS via jump host
+ssh -J "${JUMP_USER}@${JUMP_HOST}" -p "$VPS_PORT" "$VPS_USER@$VPS_HOST"
 sudo apt update && sudo apt -y upgrade
 sudo apt -y install nginx ufw fail2ban git curl unzip
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
@@ -31,7 +64,7 @@ sudo ufw allow 443/tcp
 sudo ufw --force enable
 ```
 
-## 3. Backend Deployment On VPS
+## 4. Backend Deployment On VPS
 
 ```bash
 sudo mkdir -p /srv/veritas
@@ -69,7 +102,7 @@ pm2 startup systemd -u "$USER" --hp "/home/$USER"
 
 Run the command output from `pm2 startup` when prompted.
 
-## 4. Nginx Reverse Proxy
+## 5. Nginx Reverse Proxy
 
 Create site config:
 
@@ -97,7 +130,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-## 5. Cloudflare DNS + TLS
+## 6. Cloudflare DNS + TLS
 
 1. Create DNS records:
 - `api` A/AAAA -> VPS IP, proxied on
@@ -110,7 +143,7 @@ sudo systemctl reload nginx
 - Rate limiting for API endpoints
 - Optional bot mitigation
 
-## 6. Cloudflare Pages Frontend
+## 7. Cloudflare Pages Frontend
 
 Build settings:
 
@@ -127,14 +160,14 @@ Bind custom domain:
 
 - `app.<domain>`
 
-## 7. Validation
+## 8. Validation
 
 - `https://api.<domain>/health` responds 200.
 - Frontend loads at `https://app.<domain>`.
 - Frontend API requests succeed without CORS errors.
 - No secret values appear in frontend source maps or JS bundles.
 
-## 8. Rollback
+## 9. Rollback
 
 - Frontend: promote previous Cloudflare Pages deployment.
 - Backend: restore previous release and `pm2 restart veritas-api`.

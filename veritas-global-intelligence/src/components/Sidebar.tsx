@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NewsArticle, IntelligenceReport, Tweet } from '../types';
-import { analyzeArticle, analyzeWithGrok } from '../services/intelligence';
+import { analyzeArticle, analyzeWithGrok, reconcileModelReports } from '../services/intelligence';
 import { fetchRelatedTweets } from '../services/social';
 import { Shield, AlertCircle, TrendingUp, TrendingDown, Minus, Loader2, ExternalLink, Globe, Zap, RefreshCcw, Twitter, MessageSquare, Heart, Repeat, Share2, Mail, Linkedin, Quote } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -46,7 +46,16 @@ export default function Sidebar({ articles, selectedArticle, onSelect, loading, 
 
       const geminiPromise = analyzeArticle(selectedArticle).then(res => {
         console.log("Gemini analysis report received.");
-        setReport(res);
+        setReport(current => {
+          const reconciled = grokReport ? reconcileModelReports(res, grokReport) : res;
+          // Persist to history DB
+          fetch("/api/reports", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ articleUrl: selectedArticle.url, report: reconciled, model: "gemini" }),
+          }).catch(() => { /* non-fatal */ });
+          return reconciled;
+        });
       });
       
       if (hasGrok) {
@@ -54,6 +63,19 @@ export default function Sidebar({ articles, selectedArticle, onSelect, loading, 
         analyzeWithGrok(selectedArticle).then(res => {
           console.log("Grok analysis report received.");
           setGrokReport(res);
+          setReport(current => {
+            if (current) {
+              const reconciled = reconcileModelReports(current, res);
+              // Persist Grok report to history DB
+              fetch("/api/reports", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ articleUrl: selectedArticle.url, report: res, model: "grok" }),
+              }).catch(() => { /* non-fatal */ });
+              return reconciled;
+            }
+            return current;
+          });
         });
       }
 
@@ -212,11 +234,17 @@ export default function Sidebar({ articles, selectedArticle, onSelect, loading, 
                         <p className="text-[10px] font-mono text-zinc-500 uppercase mb-2">Bot Risk</p>
                         <div className="flex items-end gap-2">
                           <span className={`text-xl font-bold ${report.botLikelihood < 30 ? 'text-emerald-500' : report.botLikelihood < 60 ? 'text-amber-500' : 'text-red-500'}`}>
-                            {report.botLikelihood}%
+                            {(report.riskScore ?? report.botLikelihood)}%
                           </span>
                         </div>
                       </div>
                     </div>
+                    {report.confidenceScore !== undefined && (
+                      <div className="bg-zinc-950 p-3 border border-zinc-800 rounded">
+                        <p className="text-[10px] font-mono text-zinc-500 uppercase mb-1">Confidence</p>
+                        <p className="text-sm font-bold text-zinc-200">{report.confidenceScore}%</p>
+                      </div>
+                    )}
                     <p className="text-xs text-zinc-400 leading-relaxed italic">"{report.summary}"</p>
                   </div>
 

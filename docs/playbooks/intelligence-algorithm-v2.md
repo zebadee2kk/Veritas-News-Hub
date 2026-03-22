@@ -139,6 +139,14 @@ Phase E: Validation
 - Scenario tests (high bot risk, low trust source, high disagreement)
 - Calibration review with historical samples
 
+## Feature Flag
+
+Algorithm V2 is wired behind:
+
+- `TRUTH_SCORING_VERSION=v2`
+
+Default behavior remains V1 when the variable is absent or set to `v1`.
+
 ## 8. Data Structures (Suggested)
 
 ```ts

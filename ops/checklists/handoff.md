@@ -4,8 +4,17 @@ Complete this checklist before beginning deployment execution.
 
 ## Access
 
-- [ ] SSH host, port, and username for VPS are confirmed.
-- [ ] SSH key has been tested successfully.
+### Jump Host (Required First)
+
+- [ ] Can SSH to `lxc-webhost365-core` as `webadmin`.
+- [ ] `~/.ssh/config` on jump host has been read — VPS alias, hostname, port, user are noted.
+- [ ] Private key for `webadmin@lxc-webhost365-core` is available for GitHub Secrets (`JUMP_SSH_KEY`).
+- [ ] Cloudflare API credentials are confirmed available from the jump host.
+
+### VPS (Via Jump Host)
+
+- [ ] Can reach VPS from jump host via SSH config alias.
+- [ ] Can reach VPS directly using `ssh -J webadmin@lxc-webhost365-core <vps>` from local.
 - [ ] Sudo privileges are confirmed on VPS user.
 - [ ] Cloudflare API token is available and tested.
 - [ ] Cloudflare zone is confirmed for target domain.

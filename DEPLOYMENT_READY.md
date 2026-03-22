@@ -21,8 +21,25 @@ Deploy Veritas News Hub with:
 
 ## Required Inputs Before Execution
 
-- VPS SSH access (host, port, user, key)
-- Cloudflare API token + account/zone access
+### Access Topology
+
+This deployment routes through a jump host (bastion). All access paths go via:
+
+```
+Local → lxc-webhost365-core (webadmin) → VPS
+```
+
+1. **Jump host:** `lxc-webhost365-core`, username `webadmin`
+   - Cloudflare API credentials are accessible from this host
+   - SSH config on the box (`~/.ssh/config`) contains the VPS hostname, port, and user
+2. **VPS:** details in `~/.ssh/config` on `lxc-webhost365-core` — copy these into your GitHub Secrets
+3. **Cloudflare API:** token available from `lxc-webhost365-core` — add to GitHub Secrets
+
+### Secrets Needed
+
+- Jump host SSH key (`JUMP_SSH_KEY`) — private key for `webadmin@lxc-webhost365-core`
+- VPS host, port, user, key (from SSH config on jump host)
+- Cloudflare API token + account/zone access (from jump host)
 - Domain and target hostnames
 - Runtime secrets (`GEMINI_API_KEY`, `NEWS_API_KEY`, `GOOGLE_MAPS_PLATFORM_KEY`, optional social keys)
 

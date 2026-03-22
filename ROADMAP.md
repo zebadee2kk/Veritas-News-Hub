@@ -6,16 +6,21 @@
 - [x] Align architecture, ops, security, and AI context docs to the current app.
 - [x] Add deployment playbook, runbook, and go-live/rollback/handoff checklists.
 - [x] Add deployment secrets reference and V2 intelligence algorithm planning document.
+- [x] Add GitHub Actions CI/CD workflows for frontend (Cloudflare Pages) and backend (VPS via SSH).
+- [x] Update deploy workflow to proxy through jump host `lxc-webhost365-core` (`webadmin`).
+- [x] Update all deployment docs and checklists to reflect actual access topology.
+- [x] Add SQLite persistence layer — articles and reports saved to `data/veritas.db`.
+- [x] Implement Algorithm V2 scoring engine with confidence + model disagreement.
 - [ ] Complete CI workflow alignment for nested app path (`veritas-global-intelligence`).
 - [ ] Add baseline tests for `server.ts` endpoints and Truth Index scoring.
-- [ ] Execute VPS + Cloudflare deployment using documented runbook once access is available.
+- [ ] Configure GitHub Secrets and execute VPS + Cloudflare deployment via jump host.
 
 ## Algorithm V2 Track
 
 - [x] Define advanced scoring architecture (`docs/playbooks/intelligence-algorithm-v2.md`).
-- [ ] Implement confidence-aware multi-signal scoring in `src/services/intelligence.ts`.
-- [ ] Add model disagreement handling between Gemini and Grok outputs.
-- [ ] Add explainability output and UI integration in sidebar intelligence report.
+- [x] Implement confidence-aware multi-signal scoring (`src/services/scoringV2.ts`).
+- [x] Add model disagreement handling between Gemini and Grok outputs.
+- [ ] Add explainability top-factors UI panel in sidebar intelligence report.
 - [ ] Add algorithm calibration and regression tests.
 
 ## Phase 1 - Core Foundation (In Progress)

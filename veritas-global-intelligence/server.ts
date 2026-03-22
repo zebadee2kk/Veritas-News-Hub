@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import fetch from "node-fetch";
 import "dotenv/config";
+import { saveArticle, saveReport, getHistory, getReportsForArticle, getStats } from "./src/services/database.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -158,6 +159,14 @@ async function startServer() {
 
       const data = await response.json();
       console.log("NewsAPI success:", data.status, data.totalResults);
+
+      // Persist articles to DB so we build history over time
+      if (data.status === "ok" && Array.isArray(data.articles)) {
+        for (const article of data.articles) {
+          try { saveArticle(article); } catch { /* non-fatal */ }
+        }
+      }
+
       res.json(data);
     } catch (error) {
       console.error("Failed to fetch news:", error);
@@ -191,6 +200,70 @@ async function startServer() {
       console.error("Failed to fetch social data:", error);
       res.status(500).json({ error: "Failed to fetch social data" });
     }
+  });
+
+  // -------------------------------------------------------------------------
+  // History / DB endpoints
+  // -------------------------------------------------------------------------
+
+  // POST /api/reports — client saves an intelligence report after analysis
+  app.post("/api/reports", (req, res) => {
+    const { articleUrl, report, model } = req.body;
+    if (!articleUrl || typeof articleUrl !== "string" || !report || typeof report !== "object") {
+      return res.status(400).json({ error: "articleUrl (string) and report (object) are required" });
+    }
+    const allowedModels = ["gemini", "grok"];
+    const safeModel = allowedModels.includes(model) ? model : "gemini";
+    try {
+      saveReport(articleUrl, report, safeModel);
+      res.json({ ok: true });
+    } catch (err) {
+      console.error("Failed to save report:", err);
+      res.status(500).json({ error: "Failed to save report" });
+    }
+  });
+
+  // GET /api/history?limit=50&offset=0 — paginated history of all analysed articles
+  app.get("/api/history", (req, res) => {
+    const limit = parseInt((req.query.limit as string) || "50", 10);
+    const offset = parseInt((req.query.offset as string) || "0", 10);
+    if (isNaN(limit) || isNaN(offset)) {
+      return res.status(400).json({ error: "limit and offset must be numbers" });
+    }
+    try {
+      const rows = getHistory(limit, offset);
+      res.json({ ok: true, data: rows });
+    } catch (err) {
+      console.error("Failed to fetch history:", err);
+      res.status(500).json({ error: "Failed to fetch history" });
+    }
+  });
+
+  // GET /api/history/:encodedUrl — reports for a specific article
+  app.get("/api/history/:encodedUrl", (req, res) => {
+    const articleUrl = decodeURIComponent(req.params.encodedUrl);
+    try {
+      const rows = getReportsForArticle(articleUrl);
+      res.json({ ok: true, data: rows });
+    } catch (err) {
+      console.error("Failed to fetch article history:", err);
+      res.status(500).json({ error: "Failed to fetch article history" });
+    }
+  });
+
+  // GET /api/stats — aggregate DB stats
+  app.get("/api/stats", (_req, res) => {
+    try {
+      res.json({ ok: true, data: getStats() });
+    } catch (err) {
+      console.error("Failed to fetch stats:", err);
+      res.status(500).json({ error: "Failed to fetch stats" });
+    }
+  });
+
+  // GET /api/health — health check used by CI
+  app.get("/api/health", (_req, res) => {
+    res.json({ ok: true, status: "healthy" });
   });
 
   // Vite middleware for development

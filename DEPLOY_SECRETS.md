@@ -22,20 +22,38 @@ This file defines the GitHub Actions secrets needed for automated deployment wor
 
 ## Backend Deployment Secrets
 
+Deployment routes through a jump host. Both the jump host and the VPS need credentials.
+
+### Jump Host (Bastion)
+
+- `JUMP_HOST`
+  - Hostname of the bastion server.
+  - Value: `lxc-webhost365-core`
+
+- `JUMP_USER`
+  - Username on the bastion server.
+  - Value: `webadmin`
+
+- `JUMP_SSH_KEY`
+  - Private key for `webadmin@lxc-webhost365-core`.
+  - Include full multi-line private key (PEM format).
+
+### VPS Target (Behind Jump Host)
+
 - `VPS_HOST`
-  - VPS hostname or public IP.
-  - Example: `203.0.113.10`
+  - VPS hostname or IP — read from `~/.ssh/config` on `lxc-webhost365-core`.
+  - Example: `203.0.113.10` or internal hostname.
 
 - `VPS_PORT`
-  - SSH port.
+  - SSH port — from `~/.ssh/config` on jump host.
   - Example: `22`
 
 - `VPS_USER`
-  - SSH user used by deploy workflow.
+  - SSH user on the VPS — from `~/.ssh/config` on jump host.
   - Example: `deploy`
 
 - `SSH_PRIVATE_KEY`
-  - Private key contents for workflow SSH auth.
+  - Private key for the VPS user (may differ from jump host key).
   - Include full multi-line private key.
 
 - `API_HEALTHCHECK_URL`
@@ -49,6 +67,7 @@ These should be stored on the VPS host in `/etc/veritas.env`.
 - `GEMINI_API_KEY`
 - `NEWS_API_KEY`
 - `GOOGLE_MAPS_PLATFORM_KEY`
+- `TRUTH_SCORING_VERSION` (set to `v2` to enable Algorithm V2)
 - `TWITTER_BEARER_TOKEN` (optional)
 - `GROK_API_KEY` (optional)
 

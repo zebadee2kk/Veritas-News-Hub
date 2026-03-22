@@ -6,41 +6,49 @@ Active.
 
 ## Current Focus
 
-- Finalize deployment-ready documentation for VPS + Cloudflare execution.
-- Stabilize development workflow and branch strategy documentation.
-- Define V2 intelligence scoring algorithm with confidence and disagreement handling.
+- Execute VPS + Cloudflare deployment using documented runbook (access via `lxc-webhost365-core`).
+- Add baseline tests for server endpoints and scoring logic.
+- Monitor SQLite history DB in production for growth and query performance.
 
 ## In Progress
 
 - [ ] Add automated tests for `server.ts` proxy behaviors and scoring utility logic.
-- [ ] Normalize CI/workflow branch triggers with active default branch strategy.
-- [ ] Execute production setup using `ops/runbook-vps-cloudflare.md` once access is available.
+- [ ] Execute production setup using `ops/runbook-vps-cloudflare.md` via jump host `lxc-webhost365-core`.
+- [ ] Add Algorithm V2 explainability UI (top factors panel in sidebar).
 
 ## Blocked Or At Risk
 
+- Production deployment pending SSH access handoff to `lxc-webhost365-core` (`webadmin`).
 - Production reliability depends on external API quota and key validity for NewsAPI, Gemini, Maps, and optional social providers.
 
 ## Recently Completed
 
-- Implemented end-to-end intelligence dashboard structure in `veritas-global-intelligence`.
-- Added setup gating and limited-mode bypass for missing credentials.
-- Added news fallback payload in backend to keep UX usable without NewsAPI.
-- Added deployment documentation pack and execution checklists for VPS + Cloudflare rollout.
-- Added `DEPLOY_SECRETS.md` and advanced scoring plan in `docs/playbooks/intelligence-algorithm-v2.md`.
+- Added SQLite persistence layer (`src/services/database.ts`) using `better-sqlite3`.
+  - Articles auto-saved on every NewsAPI fetch.
+  - Intelligence reports saved from client after each AI analysis (Gemini + Grok).
+  - New REST endpoints: `POST /api/reports`, `GET /api/history`, `GET /api/history/:url`, `GET /api/stats`, `GET /api/health`.
+- Implemented Algorithm V2 scoring engine (`src/services/scoringV2.ts`) with confidence, model disagreement, and explainability.
+  - Feature-flagged behind `TRUTH_SCORING_VERSION=v2` env var.
+- Updated deployment workflow (`.github/workflows/deploy-backend.yml`) to proxy through jump host `lxc-webhost365-core`.
+- Updated all deployment docs and checklists to reflect actual access topology.
+- Added `DEPLOY_SECRETS.md` with jump host and VPS secrets reference.
 
 ## Next Milestones
 
+- Configure GitHub Secrets from `DEPLOY_SECRETS.md` (jump host + VPS + Cloudflare).
+- Execute `ops/checklists/handoff.md` → `ops/runbook-vps-cloudflare.md` → `ops/checklists/go-live.md`.
 - Add smoke/integration tests and enforce in CI.
-- Add caching and better API resilience controls.
-- Prepare a production deployment target with environment hardening.
+- Add explainability top-factors UI panel in Sidebar.
 
 ## Architecture Notes
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for details. Current core choices:
 
 - Single TypeScript stack (React frontend + Express backend).
-- External API proxy in `server.ts` to manage CORS, fallback, and timeout behavior.
-- Deterministic Truth Index calculation in `src/services/intelligence.ts`.
+- External API proxy in `server.ts` to manage CORS, fallback, and timeout behaviour.
+- SQLite file DB (`data/veritas.db`) for article and report history — file-based, no separate server.
+- Dual-model analysis: Gemini (primary) + Grok (optional), reconciled via `reconcileModelReports`.
+- Truth Index V1 (default) or V2 scoring engine (opt-in via env flag).
 
 ## Key Dependencies
 
@@ -48,3 +56,4 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for details. Current core choices:
 - Google Gemini API: analysis and translation intelligence.
 - Google Maps Platform: geospatial UI rendering.
 - X API (optional): social context enrichment.
+- better-sqlite3: local persistence layer for history.

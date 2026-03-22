@@ -29,11 +29,25 @@ export interface NewsResponse {
   error?: string;
 }
 
+export type Sentiment = 'positive' | 'neutral' | 'negative';
+
+export interface ExplainabilityReport {
+  topPositiveFactors: string[];
+  topNegativeFactors: string[];
+  confidenceDrivers: string[];
+  modelDisagreement: number;
+  dataFreshness: number;
+}
+
 export interface IntelligenceReport {
   credibilityScore: number;
   botLikelihood: number;
-  sentiment: 'positive' | 'neutral' | 'negative';
+  sentiment: Sentiment;
   truthIndex: number;
+  truthScore?: number;
+  riskScore?: number;
+  confidenceScore?: number;
+  explainability?: ExplainabilityReport;
   summary: string;
   reasoning: string;
 }

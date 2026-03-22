@@ -7,13 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Veritas Global Intelligence application under `veritas-global-intelligence`.
-- Backend API proxy endpoints for news and optional social feeds.
-- AI analysis pipeline with Truth Index scoring and translation support.
-- Geospatial map visualization and intelligence sidebar workflow.
-- Setup guidance flow for required and optional API keys.
+- SQLite persistence layer (`src/services/database.ts`) using `better-sqlite3`.
+  - Articles auto-saved on every NewsAPI fetch.
+  - Intelligence reports persisted via `POST /api/reports` after Gemini/Grok analysis.
+  - New endpoints: `GET /api/history`, `GET /api/history/:encodedUrl`, `GET /api/stats`, `GET /api/health`.
+  - DB file stored at `data/veritas.db` (gitignored, persisted on VPS).
+- Algorithm V2 scoring engine (`src/services/scoringV2.ts`) — confidence scoring, model disagreement penalty, variance penalty, explainability report.
+  - Gated behind `TRUTH_SCORING_VERSION=v2` environment variable.
+- Jump host support in GitHub Actions backend deploy workflow — proxies through `lxc-webhost365-core` via `appleboy/ssh-action` `proxy_*` fields.
+- `JUMP_HOST`, `JUMP_USER`, `JUMP_SSH_KEY` secrets added to `DEPLOY_SECRETS.md`.
+- Updated `ops/runbook-vps-cloudflare.md`, `ops/checklists/handoff.md`, and `DEPLOYMENT_READY.md` to document the actual access topology.
 
 ### Changed
+- `server.ts` now imports and initialises the database on startup, saving articles on every NewsAPI response.
+- `Sidebar.tsx` now POSTs both Gemini and Grok reports to `/api/reports` after analysis completes.
+- `V2 types added to `src/types.ts`: `Sentiment`, `ExplainabilityReport`, optional V2 fields on `IntelligenceReport`.
+- `.gitignore` updated to exclude `data/`, `*.db`, `*.db-shm`, `*.db-wal`.
 - Replaced template repository documentation with project-specific architecture, status, roadmap, and operations content.
 
 ### Fixed

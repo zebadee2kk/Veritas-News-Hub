@@ -1,7 +1,10 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { IntelligenceReport, NewsArticle } from "../types";
+import { applyModelDisagreement, enrichWithV2Scores } from "./scoringV2";
 
 const API_KEY = process.env.GEMINI_API_KEY || process.env.API_KEY || "";
+const SCORING_VERSION = (process.env.TRUTH_SCORING_VERSION || "v1").toLowerCase();
+const USE_SCORING_V2 = SCORING_VERSION === "v2";
 
 const mask = (key: string | undefined) => {
   if (!key) return 'MISSING';
@@ -112,11 +115,12 @@ export const analyzeArticle = async (article: NewsArticle): Promise<Intelligence
 
     return {
       ...result,
-      truthIndex
+      truthIndex,
+      ...(USE_SCORING_V2 ? enrichWithV2Scores({ ...result, truthIndex }) : {}),
     };
   } catch (error) {
     console.error("Gemini Analysis Error:", error);
-    return {
+    const fallback: IntelligenceReport = {
       credibilityScore: 50,
       botLikelihood: 10,
       sentiment: "neutral",
@@ -124,6 +128,8 @@ export const analyzeArticle = async (article: NewsArticle): Promise<Intelligence
       summary: "Analysis unavailable.",
       reasoning: "Failed to connect to intelligence engine.",
     };
+
+    return USE_SCORING_V2 ? enrichWithV2Scores(fallback) : fallback;
   }
 };
 
@@ -241,13 +247,15 @@ export const analyzeWithGrok = async (article: NewsArticle): Promise<Intelligenc
       result.sentiment
     );
 
-    return {
+    const report: IntelligenceReport = {
       ...result,
       truthIndex
     };
+
+    return USE_SCORING_V2 ? enrichWithV2Scores(report) : report;
   } catch (error) {
     console.error("Grok Analysis Error:", error);
-    return {
+    const fallback: IntelligenceReport = {
       credibilityScore: 50,
       botLikelihood: 10,
       sentiment: "neutral",
@@ -255,5 +263,18 @@ export const analyzeWithGrok = async (article: NewsArticle): Promise<Intelligenc
       summary: "Grok analysis unavailable.",
       reasoning: "Failed to connect to xAI engine.",
     };
+
+    return USE_SCORING_V2 ? enrichWithV2Scores(fallback) : fallback;
   }
+};
+
+export const reconcileModelReports = (
+  primary: IntelligenceReport,
+  secondary?: IntelligenceReport | null,
+): IntelligenceReport => {
+  if (!USE_SCORING_V2 || !secondary) {
+    return primary;
+  }
+
+  return applyModelDisagreement(primary, secondary);
 };
