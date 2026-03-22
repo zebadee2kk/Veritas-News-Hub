@@ -8,6 +8,7 @@ Active.
 
 - Finalize deployment-ready documentation for VPS + Cloudflare execution.
 - Stabilize development workflow and branch strategy documentation.
+- Define V2 intelligence scoring algorithm with confidence and disagreement handling.
 
 ## In Progress
 
@@ -25,6 +26,7 @@ Active.
 - Added setup gating and limited-mode bypass for missing credentials.
 - Added news fallback payload in backend to keep UX usable without NewsAPI.
 - Added deployment documentation pack and execution checklists for VPS + Cloudflare rollout.
+- Added `DEPLOY_SECRETS.md` and advanced scoring plan in `docs/playbooks/intelligence-algorithm-v2.md`.
 
 ## Next Milestones
 

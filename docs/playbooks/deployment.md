@@ -72,3 +72,5 @@ Optional runtime secrets:
 - `ops/checklists/go-live.md`
 - `ops/checklists/rollback.md`
 - `ops/environments.md`
+- `DEPLOY_SECRETS.md`
+- `docs/playbooks/intelligence-algorithm-v2.md`

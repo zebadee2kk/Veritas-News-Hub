@@ -17,6 +17,7 @@ Deploy Veritas News Hub with:
 3. Execute commands in `ops/runbook-vps-cloudflare.md`.
 4. Validate with `ops/checklists/go-live.md`.
 5. If needed, follow `ops/checklists/rollback.md`.
+6. Configure workflow secrets from `DEPLOY_SECRETS.md`.
 
 ## Required Inputs Before Execution
 
@@ -28,8 +29,13 @@ Deploy Veritas News Hub with:
 ## Current Status Snapshot
 
 - Deployment docs: complete
-- Deployment automation workflows: planned (not yet implemented)
+- Deployment automation workflows: implemented in `.github/workflows/deploy-frontend.yml` and `.github/workflows/deploy-backend.yml`
 - Production deployment execution: pending access handoff
+
+## Related Planning Docs
+
+- `DEPLOY_SECRETS.md`
+- `docs/playbooks/intelligence-algorithm-v2.md`
 
 ## Update After Execution
 

@@ -5,9 +5,18 @@
 - [x] Replace template/default repository docs with project-specific documentation.
 - [x] Align architecture, ops, security, and AI context docs to the current app.
 - [x] Add deployment playbook, runbook, and go-live/rollback/handoff checklists.
+- [x] Add deployment secrets reference and V2 intelligence algorithm planning document.
 - [ ] Complete CI workflow alignment for nested app path (`veritas-global-intelligence`).
 - [ ] Add baseline tests for `server.ts` endpoints and Truth Index scoring.
 - [ ] Execute VPS + Cloudflare deployment using documented runbook once access is available.
+
+## Algorithm V2 Track
+
+- [x] Define advanced scoring architecture (`docs/playbooks/intelligence-algorithm-v2.md`).
+- [ ] Implement confidence-aware multi-signal scoring in `src/services/intelligence.ts`.
+- [ ] Add model disagreement handling between Gemini and Grok outputs.
+- [ ] Add explainability output and UI integration in sidebar intelligence report.
+- [ ] Add algorithm calibration and regression tests.
 
 ## Phase 1 - Core Foundation (In Progress)
 
