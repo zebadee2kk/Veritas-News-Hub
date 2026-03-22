@@ -1,0 +1,42 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: ["master"]
+    paths:
+      - "veritas-global-intelligence/**"
+      - ".github/workflows/deploy-backend.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Deploy to VPS over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd /srv/veritas/Veritas-News-Hub
+            git fetch origin master
+            git checkout master
+            git pull --ff-only origin master
+            cd veritas-global-intelligence
+            npm ci
+            npm run build
+            pm2 restart veritas-api --update-env || pm2 start "npx tsx server.ts" --name veritas-api --update-env
+            pm2 save
+
+      - name: Backend health check
+        run: |
+          curl -fsSL "${{ secrets.API_HEALTHCHECK_URL }}"

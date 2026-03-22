@@ -7,8 +7,8 @@
 | CI | `.github/workflows/ci.yml` | Push and PR on configured branches | Lint and test Node/Python projects when detected |
 | Security Scan | `.github/workflows/security-scan.yml` | Push, PR, and weekly schedule | CodeQL analysis for JavaScript and Python |
 | Stale Cleanup | `.github/workflows/stale.yml` | Daily schedule | Mark and close inactive issues/PRs |
-| Frontend Deploy (planned) | `.github/workflows/deploy-frontend.yml` | Push to `master` | Build and deploy frontend to Cloudflare Pages |
-| Backend Deploy (planned) | `.github/workflows/deploy-backend.yml` | Push to `master` | Deploy backend to VPS via SSH |
+| Frontend Deploy | `.github/workflows/deploy-frontend.yml` | Push to `master` and manual dispatch | Build and deploy frontend to Cloudflare Pages |
+| Backend Deploy | `.github/workflows/deploy-backend.yml` | Push to `master` and manual dispatch | Deploy backend to VPS via SSH and run health check |
 
 ## Pipeline Details
 
@@ -31,12 +31,12 @@
 - **Trigger:** Daily cron schedule.
 - **Action:** Labels stale issues/PRs and closes after configured inactivity window.
 
-### Frontend Deploy (Planned)
+### Frontend Deploy
 
 - **Target:** Cloudflare Pages
 - **Expected steps:** install, build (`veritas-global-intelligence`), deploy, smoke check.
 
-### Backend Deploy (Planned)
+### Backend Deploy
 
 - **Target:** VPS host behind Nginx
 - **Expected steps:** checkout, install, restart PM2 process, health check.
@@ -51,8 +51,9 @@
 | `SSH_PRIVATE_KEY` | GitHub Actions secrets | Non-interactive SSH authentication |
 | `CLOUDFLARE_API_TOKEN` | GitHub Actions secrets | Cloudflare Pages/DNS deploy actions |
 | `CLOUDFLARE_ACCOUNT_ID` | GitHub Actions secrets | Cloudflare account scoping |
-
-Current committed workflows do not yet consume these secrets; they are for planned deployment workflows.
+| `CLOUDFLARE_PAGES_PROJECT` | GitHub Actions secrets | Cloudflare Pages project name |
+| `VITE_API_BASE_URL` | GitHub Actions secrets | Frontend API base URL during build |
+| `API_HEALTHCHECK_URL` | GitHub Actions secrets | Post-deploy backend health endpoint |
 
 ## Manual Triggers
 
