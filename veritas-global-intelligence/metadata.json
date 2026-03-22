@@ -1,0 +1,5 @@
+{
+  "name": "Veritas: Global Intelligence",
+  "description": "A global news and social intelligence platform that filters misinformation and provides location-based insights using AI.",
+  "requestFramePermissions": ["geolocation"]
+}

@@ -2,16 +2,18 @@
 
 ## Supported Versions
 
-The following versions of [Project Name] are currently being supported with security updates.
+This project is currently pre-1.0 and maintained on the active `master` branch.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.0.x   | ✅                 |
-| < 1.0   | ❌                 |
+| Version / Branch | Supported |
+|------------------|-----------|
+| `master` (latest) | Yes |
+| historical commits | No |
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within this project, please send an e-mail to [INSERT EMAIL ADDRESS]. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability, do not open a public issue with exploit details.
+
+Please report privately by opening a GitHub Security Advisory for this repository, or contact the maintainers through repository owner channels.
 
 Please include the following in your report:
 - Type of issue (e.g., SQL injection, cross-site scripting, etc.)
@@ -19,9 +21,9 @@ Please include the following in your report:
 - Steps to reproduce
 - Potential impact
 
-We will acknowledge receipt of your vulnerability report within 48 hours and will send you updates during our remediation process.
+We aim to acknowledge receipt within 72 hours and will provide remediation updates as triage progresses.
 
 ## Our Commitment
 - We will not disclose the vulnerability to third parties without your consent.
 - We will provide a fix in a timely manner.
-- We will publicize the vulnerability (with your credit) once it is patched.
+- We may publish a disclosure summary after a patch is available.

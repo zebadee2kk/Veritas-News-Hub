@@ -1,31 +1,30 @@
 # Development Playbook
 
-This document outlines the development standards and workflows for this project.
+This document outlines day-to-day engineering workflow for Veritas News Hub.
 
 ## 🛠️ Environment Setup
 
 ### Prerequisites
-Ensure you have the correct runtime for the specific project type:
-
-- **Node.js Projects** (`package.json` present):
-  - Install Node.js LTS.
-  - Run `npm install` or `yarn` or `pnpm install`.
-- **Python Projects** (`requirements.txt` / `pyproject.toml` present):
-  - Install Python 3.10+.
-  - Create a virtual environment: `python -m venv venv`.
-  - Activate source: `source venv/bin/activate` (Linux/Mac) or `venv\Scripts\activate` (Windows).
-  - Install deps: `pip install -r requirements.txt`.
+Install Node.js LTS (18+ recommended).
 
 ### Local Configuration
-1. Copy `.env.example` to `.env`.
-2. Fill in the required secrets and API keys.
+1. `cd veritas-global-intelligence`
+2. `npm install`
+3. Configure `.env.local` with required keys:
+   - `GEMINI_API_KEY`
+   - `GOOGLE_MAPS_PLATFORM_KEY`
+   - `NEWS_API_KEY`
+4. Optional keys:
+   - `TWITTER_BEARER_TOKEN`
+   - `GROK_API_KEY`
+5. Start dev server: `npm run dev`
 
 ## 🌿 Branching Strategy
-We use a **Trunk-Based Development** flow:
+We use a trunk-style flow:
 
-1. `main` is the single source of truth.
+1. `master` is the active default branch.
 2. Create short-lived feature branches: `feat/my-feature` or `fix/issue-123`.
-3. Open a Pull Request (PR) to merge into `main`.
+3. Open a Pull Request (PR) to merge into `master`.
 4. **Squash and Merge** is preferred to keep history linear.
 
 ## ✍️ Coding Standards
@@ -37,18 +36,13 @@ We use a **Trunk-Based Development** flow:
 
 ### JavaScript / TypeScript
 - Linting: `npm run lint`
-- Formatting: `npm run format`
-
-### Python
-- Linting: `flake8`
-- Formatting: `black .`
+- Build verification: `npm run build`
 
 ## 🧪 Testing Strategy
-- **Unit Tests**: Required for all business logic.
-- **Coverage**: Aim for >80% coverage on critical paths.
-- **Run Tests**:
-  - JS: `npm test`
-  - Python: `pytest`
+- Add tests for:
+  - `server.ts` endpoint behavior (success, timeout, fallback, key missing).
+  - `calculateTruthIndex` and analysis-service edge cases.
+- If tests are not yet available, document manual verification in the PR.
 
 ## 📦 Commits
 Follow [Conventional Commits](https://www.conventionalcommits.org/):

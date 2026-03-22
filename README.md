@@ -1,86 +1,90 @@
-# Best Practice Polyglot Template [AI-Native]
+# Veritas News Hub
 
-[![Security Scan](https://github.com/zebadee2kk/best-practice-repo-template/actions/workflows/security-scan.yml/badge.svg)](https://github.com/zebadee2kk/best-practice-repo-template/actions/workflows/security-scan.yml)
-[![CI](https://github.com/zebadee2kk/best-practice-repo-template/actions/workflows/ci.yml/badge.svg)](https://github.com/zebadee2kk/best-practice-repo-template/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Veritas News Hub is the repository for Veritas Global Intelligence, an AI-assisted news and social intelligence dashboard focused on rapid signal triage.
 
-A **universal, AI-native** repository template designed for modern "Agentic" workflows. Integrating best practices for **Governance**, **Security**, and **Polyglot Development** (Node.js & Python).
+The live application code is in [veritas-global-intelligence](veritas-global-intelligence).
 
-## 🌟 Features
-- **Polyglot CI/CD**: Automatically detects `package.json` (Node.js) or `requirements.txt` (Python) and runs the correct pipeline.
-- **AI-Ready**: Includes `.cursorrules` and `ai/` directory to give generic and specific instructions to AI agents (Claude, Gemini, Copilot, Perplexity, Codex).
-- **Multi-Agent Team Model**: Pre-configured team charter and playbook for orchestrating multiple AI agents (Opus, Sonnet, Haiku, Perplexity, Codex, Antigravity) with a human Director.
-- **Governance First**: Pre-configured Issue Templates, Security Policy, and Contributing Guide.
+## What The App Does
 
-## 🚀 Quick Start
+- Ingests global news via server-side proxy endpoints.
+- Displays articles in an operator-style intelligence sidebar.
+- Maps events on an interactive geospatial view.
+- Runs article analysis to estimate credibility, bot likelihood, sentiment, and a composite Truth Index.
+- Optionally compares Gemini and Grok analysis outputs.
+- Optionally fetches related X/Twitter posts for social context.
 
-### 1. Instantiate the Template
-Click **"Use this template"** to create a new repository.
+## Repository Layout
 
-### 2. Choose Your Stack
-
-**For Node.js / Web Apps:**
-```bash
-npm init -y
-# The CI pipeline will now automatically detect a Node project
+```text
+.
+├── veritas-global-intelligence/   # React + Vite frontend and Express API server
+├── docs/                          # Project context and playbooks
+├── ops/                           # Environment, monitoring, and pipeline docs
+├── ai/                            # AI working context, handover, and team docs
+├── ARCHITECTURE.md
+├── PROJECT_STATUS.md
+└── ROADMAP.md
 ```
 
-**For Python / AI / ML:**
-```bash
-touch requirements.txt
-# The CI pipeline will now automatically detect a Python project
-```
+## Quick Start
 
-### 3. Set Up Your AI Team
+1. Move into the app directory.
 
 ```bash
-# Customise the team charter for your project
-# Replace all {{PLACEHOLDERS}} in:
-nano ai/AI_TEAM.md
-nano ai/AI_CONTEXT.md
-nano ai/AI_RULES.md
+cd veritas-global-intelligence
 ```
 
-See the [AI Team Playbook](./ai/AI_TEAM_PLAYBOOK.md) for a full explanation of the multi-agent model.
+2. Install dependencies.
 
-## 📖 Documentation
+```bash
+npm install
+```
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Architecture](./docs/playbooks/architecture.md)
-- [Roadmap](./ROADMAP.md)
+3. Configure environment variables in `.env.local`.
 
-## 🤖 AI Team Model
+Required:
+- `GEMINI_API_KEY`
+- `GOOGLE_MAPS_PLATFORM_KEY`
+- `NEWS_API_KEY`
 
-This template includes a battle-tested pattern for orchestrating multiple AI agents on a single project:
+Optional:
+- `TWITTER_BEARER_TOKEN`
+- `GROK_API_KEY`
 
-| Agent | Role |
-|-------|------|
-| **You** | Director & Human-in-the-Loop |
-| **Perplexity** | Project Manager & Lead Research |
-| **Opus** | Architect |
-| **Sonnet** | Senior Engineer |
-| **Haiku** | Engineer |
-| **Codex** | Security & Code Review |
-| **Antigravity** | UI/UX & Design |
+4. Start the development server.
 
-**Key principle**: The repo is shared memory. Agents communicate via commits, docs, and issues — not via a shared chat thread.
+```bash
+npm run dev
+```
 
-→ [Full team charter template](./ai/AI_TEAM.md)  
-→ [Why this model works](./ai/AI_TEAM_PLAYBOOK.md)
+The app runs at `http://localhost:3000` via `server.ts`.
 
-## 🤝 Contributing
+## Available Scripts
 
-We love contributions! Please read our [Contributing Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) before getting started.
+From [veritas-global-intelligence/package.json](veritas-global-intelligence/package.json):
 
-- [Development Playbook](./docs/playbooks/development.md)
-- [Project Management Playbook](./docs/playbooks/project-management.md)
+- `npm run dev` - starts Express + Vite middleware in development
+- `npm run build` - creates production build
+- `npm run preview` - previews built frontend
+- `npm run start` - starts server entrypoint
+- `npm run clean` - removes dist output
+- `npm run lint` - TypeScript no-emit check
 
-## 🛡️ Security
+## Documentation
 
-If you discover a security vulnerability, please see our [Security Policy](SECURITY.md).
+- [ARCHITECTURE.md](ARCHITECTURE.md)
+- [PROJECT_STATUS.md](PROJECT_STATUS.md)
+- [ROADMAP.md](ROADMAP.md)
+- [docs/playbooks/development.md](docs/playbooks/development.md)
+- [docs/playbooks/security.md](docs/playbooks/security.md)
+- [ops/environments.md](ops/environments.md)
 
-## 📄 License
+## Contributing And Security
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- Contribution process: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- Security reporting: [SECURITY.md](SECURITY.md)
+
+## License
+
+MIT. See [LICENSE](LICENSE).

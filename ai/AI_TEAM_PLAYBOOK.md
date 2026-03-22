@@ -22,7 +22,7 @@ The multi-agent team model solves this by **assigning specialised roles, using t
 No single AI agent has persistent memory across sessions. But **the repository does**. Every decision, design note, commit message, roadmap entry, and team rule lives in the repo — readable by any agent, at any time, in any session.
 
 This means:
-- Perplexity checks `docs/ROADMAP.md` and recent commits at the start of every session to get current
+- Perplexity checks `ROADMAP.md` and recent commits at the start of every session to get current
 - Opus reads the architecture docs before designing anything new
 - Sonnet reads `CLAUDE.md` (or equivalent) before touching code
 - Codex reads the security rules before reviewing
@@ -72,28 +72,21 @@ AI agents are fast and capable but lack business context, personal preferences, 
 
 ---
 
-## Setting Up for a New Project
+## Applying This Model In This Repository
 
-### Step 1: Copy the template files
+### Step 1: Keep these files current
 
 ```
-ai/AI_TEAM.md          ← team charter (customise placeholders)
-ai/AI_TEAM_PLAYBOOK.md ← this file (keep as-is or adapt)
+ai/AI_TEAM.md          ← team charter
+ai/AI_TEAM_PLAYBOOK.md ← this file
 ai/AI_RULES.md         ← non-negotiable rules for all agents
 ai/AI_CONTEXT.md       ← project-specific context
-docs/ROADMAP.md        ← living roadmap + session log
+ROADMAP.md             ← roadmap and milestone plan
 ```
 
-### Step 2: Customise AI_TEAM.md
+### Step 2: Maintain charter and rules
 
-Replace all `{{PLACEHOLDERS}}`:
-- `{{PROJECT_NAME}}` — your project name
-- `{{YOUR_NAME}}` — your name or handle
-- `{{PRODUCT_URL}}` — live site or product URL
-- `{{REPO_URL}}` — GitHub repo URL
-- `{{TECH_GUIDE}}` — path to your technical reference doc (e.g. `CLAUDE.md`)
-
-Remove any roles you don't need (Haiku and Antigravity are optional for backend/CLI projects).
+Update `ai/AI_TEAM.md` and `ai/AI_RULES.md` whenever process or ownership changes.
 
 ### Step 3: Create a technical reference doc
 
@@ -108,9 +101,9 @@ Every project needs a `CLAUDE.md` (or equivalent) that all agents read before to
 - Security rules
 - Important conventions (SSoT files, naming, patterns)
 
-### Step 4: Initialise the ROADMAP
+### Step 4: Maintain roadmap hygiene
 
-Create `docs/ROADMAP.md` with:
+Keep `ROADMAP.md` updated with:
 - Current known issues (empty is fine)
 - First planned features
 - A session log table
@@ -122,7 +115,7 @@ Perplexity will maintain this going forward.
 Each agent should be given, or should independently read:
 1. Their role from `ai/AI_TEAM.md`
 2. The technical reference (`CLAUDE.md`)
-3. The current roadmap (`docs/ROADMAP.md`)
+3. The current roadmap (`ROADMAP.md`)
 4. Recent commits (Perplexity can summarise these)
 
 ---

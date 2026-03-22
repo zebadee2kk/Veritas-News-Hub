@@ -1,18 +1,40 @@
 # Project Roadmap
 
-Our vision for the future of this project.
+## March 2026 Update
 
-## 🟢 Phase 1: Foundation (Current)
-- [x] Initial repository setup.
-- [ ] Define core API.
-- [ ] Setup production deployment.
+- [x] Replace template/default repository docs with project-specific documentation.
+- [x] Align architecture, ops, security, and AI context docs to the current app.
+- [ ] Complete CI workflow alignment for nested app path (`veritas-global-intelligence`).
+- [ ] Add baseline tests for `server.ts` endpoints and Truth Index scoring.
 
-## 🟡 Phase 2: Growth
-- [ ] Community feedback integration.
-- [ ] Feature X implementation.
-- [ ] Plugin architecture.
+## Phase 1 - Core Foundation (In Progress)
 
-## 🔴 Phase 3: Scale
-- [ ] Enterprise support.
-- [ ] Multi-region deployment.
-- [ ] Performance optimizations.
+- [x] Stand up React + Express application structure.
+- [x] Integrate NewsAPI ingestion through backend proxy endpoint.
+- [x] Integrate Gemini-based article analysis and translation.
+- [x] Add map visualization and article geolocation display.
+- [x] Add setup flow for required and optional API keys.
+- [ ] Add baseline test suite for critical paths.
+- [ ] Align CI checks with current repository structure.
+
+## Phase 2 - Product Hardening
+
+- [ ] Add server-side caching for repeated news queries.
+- [ ] Add retry and circuit-breaker behavior for upstream API calls.
+- [ ] Add structured logging and request correlation IDs.
+- [ ] Add better location extraction to replace mock geocoding.
+- [ ] Add stronger validation and sanitization for inbound query params.
+
+## Phase 3 - Intelligence Expansion
+
+- [ ] Add source reputation memory and longitudinal trust trends.
+- [ ] Add entity extraction and storyline clustering.
+- [ ] Add alert subscriptions for regional or topic-specific intelligence signals.
+- [ ] Add analyst workspaces for saved investigations and exported reports.
+
+## Phase 4 - Deployment And Scale
+
+- [ ] Define target production platform and deployment pipeline.
+- [ ] Add environment-specific configuration and secret management policy.
+- [ ] Add uptime, latency, and error-budget monitoring.
+- [ ] Add rate-limit strategy and abuse protections for public-facing deployment.

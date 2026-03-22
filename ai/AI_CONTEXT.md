@@ -1,66 +1,52 @@
-# AI Context — <repo-name>
-
-> **Read this first.** This file tells any AI assistant exactly what this repository is, what it does, and how to work with it effectively.
->
-> ⚠️ **This is a template file.** Replace all `<placeholder>` values and remove this notice when using.
+# AI Context - Veritas News Hub
 
 ## Repository Purpose
 
-<2-3 sentences describing what this repo does, who uses it, and why it exists.>
+This repository contains Veritas Global Intelligence, a full-stack TypeScript application for ingesting and analyzing global news and social signals. It is used to triage potential misinformation and surface location-based intelligence in a map-first dashboard.
 
 ## Architecture Overview
 
+```text
+Veritas-News-Hub/
+├── ai/                            # AI operating context, rules, and handover
+├── docs/                          # Project playbooks and active context
+├── ops/                           # Environments, monitoring, and CI/CD docs
+├── veritas-global-intelligence/   # Main app (React + Express + Vite)
+├── ARCHITECTURE.md
+├── PROJECT_STATUS.md
+├── ROADMAP.md
+└── SECURITY.md
 ```
-<repo-name>/
-├── ai/                    ← AI assistant context files (YOU ARE HERE)
-├── src/                   ← <description>
-├── docs/                  ← <description>
-├── tests/                 ← <description>
-├── .github/               ← CI/CD workflows and templates
-├── PROJECT_STATUS.md      ← Current project status
-├── ARCHITECTURE.md        ← System architecture detail
-├── CHANGELOG.md           ← Change history
-└── SECURITY.md            ← Security policy
-```
-
-## Key Relationships
-
-| Repo | Relationship |
-|------|-------------|
-| `portfolio-management` | Governance hub — tracks this repo's status and compliance |
-| `best-practice-repo-template` | This repo was created from this template |
-| `<related-repo>` | <describe relationship> |
 
 ## Existing Tooling
 
-- **`<tool/script>`** — <what it does>
+- `npm run dev` in `veritas-global-intelligence`: starts Express server with Vite middleware.
+- `npm run build`: builds frontend production assets.
+- `npm run lint`: TypeScript no-emit validation.
 
 ## What Still Needs Building
 
-- [ ] <item>
-- [ ] <item>
+- Automated tests for API handlers and scoring logic.
+- Production deployment definition and environment hardening.
+- Improved geolocation extraction and persistent data/caching.
 
-## Working with This Repo
+## Working With This Repo
 
-- **Language:** <Python 3.11+ / PowerShell 7+ / etc.>
-- **Package manager:** <pip / npm / etc.>
-- **Key commands:**
-  ```bash
-  # Install dependencies
-  <install command>
-
-  # Run tests
-  <test command>
-
-  # Run main script
-  <run command>
-  ```
-- **Required env vars:** `<VAR_NAME>` — <what it's for>
+- Language: TypeScript (frontend and backend)
+- Package manager: npm
+- App folder: `veritas-global-intelligence`
+- Required env vars:
+  - `GEMINI_API_KEY`
+  - `GOOGLE_MAPS_PLATFORM_KEY`
+  - `NEWS_API_KEY`
+- Optional env vars:
+  - `TWITTER_BEARER_TOKEN`
+  - `GROK_API_KEY`
 
 ## AI Assistant Instructions
 
-1. **Read before write** — always read existing files before modifying them
-2. **Check `PROJECT_STATUS.md`** at the start of every session
-3. **Check `ai/AI_RULES.md`** for repo-specific rules
-4. **Update `ai/AI_HANDOVER.md`** at the end of each significant work session
-5. <add any repo-specific instructions here>
+1. Read before write for every file edit.
+2. Check `PROJECT_STATUS.md` and `ROADMAP.md` at session start.
+3. Follow `ai/AI_RULES.md` for repo-level constraints.
+4. Update `ai/AI_HANDOVER.md` after significant sessions.
+5. Never commit secrets or raw key values.

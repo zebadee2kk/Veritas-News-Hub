@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Standard repo structure.
-- Playbooks for dev, pm, and security.
-- GitHub workflows for CI and security.
+- Veritas Global Intelligence application under `veritas-global-intelligence`.
+- Backend API proxy endpoints for news and optional social feeds.
+- AI analysis pipeline with Truth Index scoring and translation support.
+- Geospatial map visualization and intelligence sidebar workflow.
+- Setup guidance flow for required and optional API keys.
+
+### Changed
+- Replaced template repository documentation with project-specific architecture, status, roadmap, and operations content.
+
+### Fixed
+- Removed placeholder references and generic template naming in core documentation files.

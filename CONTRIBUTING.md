@@ -1,6 +1,6 @@
-# Contributing to [Project Name]
+# Contributing to Veritas News Hub
 
-First off, thank you for considering contributing to [Project Name]! It's people like you that make this community such a great place.
+Thank you for contributing to Veritas News Hub.
 
 ## 🌈 Our Philosophy
 We aim for high-quality, maintainable code and a welcoming environment. Please follow these guidelines to help us maintain this standard.
@@ -17,9 +17,9 @@ We aim for high-quality, maintainable code and a welcoming environment. Please f
 - **Open an Issue**: Use the [Feature Request Template](.github/ISSUE_TEMPLATE/feature_request.md).
 
 ### Pull Requests
-1. **Fork the repo** and create your branch from `main`.
+1. **Fork the repo** and create your branch from `master`.
 2. **Follow the Style Guide**: See [Development Playbook](./docs/playbooks/development.md).
-3. **Write Tests**: If you add code, add tests!
+3. **Write Tests**: If you add code paths, add or update tests where possible.
 4. **Update Docs**: Ensure README and other docs reflect your changes.
 5. **Detailed PR**: Use the [PR Template](.github/PULL_REQUEST_TEMPLATE.md).
 
@@ -29,6 +29,15 @@ We aim for high-quality, maintainable code and a welcoming environment. Please f
 - **Disclosure**: Note AI usage in the PR template and summarize prompts or tools used.
 - **Verification**: The human sponsor confirms tests, security checks, and reviews are complete.
 - **No secrets**: Never include secrets or private data in AI prompts or outputs.
+
+## ✅ Contribution Checklist
+
+- Keep changes scoped to a clear issue or objective.
+- Run local checks in `veritas-global-intelligence`:
+	- `npm run lint`
+	- `npm run build`
+- Confirm no secrets are committed (`.env*`, API keys, tokens).
+- Update [ARCHITECTURE.md](ARCHITECTURE.md), [ROADMAP.md](ROADMAP.md), or [PROJECT_STATUS.md](PROJECT_STATUS.md) when relevant.
 
 ## 🛠️ Development Setup
 See the [Development Playbook](./docs/playbooks/development.md) for a deep dive into local setup and workflows.

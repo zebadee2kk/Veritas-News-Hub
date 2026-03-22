@@ -1,43 +1,46 @@
-# Project Status — <repo-name>
-
-> ⚠️ **This is a template file.** Fill in the sections below and remove this notice.
+# Project Status - Veritas News Hub
 
 ## Current Status
 
-<!-- Pick one: -->
-🟢 **Active** | 🟡 **In Progress** | 🔴 **Blocked** | ⚫ **Archived** | 💡 **Idea/Planning**
+Active.
 
-## This Week's Focus
+## Current Focus
 
-- <focus item 1>
-- <focus item 2>
+- Align repository docs and operational files to the implemented Veritas Global Intelligence app.
+- Stabilize development workflow and branch strategy documentation.
 
 ## In Progress
 
-- [ ] <task> — <owner / ETA>
-- [ ] <task> — <owner / ETA>
+- [ ] Add automated tests for `server.ts` proxy behaviors and scoring utility logic.
+- [ ] Normalize CI/workflow branch triggers with active default branch strategy.
 
-## Blocked
+## Blocked Or At Risk
 
-- <task>: <reason for block>
+- Production reliability depends on external API quota and key validity for NewsAPI, Gemini, Maps, and optional social providers.
 
 ## Recently Completed
 
-- ✅ <task> (<date>)
-- ✅ <task> (<date>)
+- Implemented end-to-end intelligence dashboard structure in `veritas-global-intelligence`.
+- Added setup gating and limited-mode bypass for missing credentials.
+- Added news fallback payload in backend to keep UX usable without NewsAPI.
 
-## Upcoming
+## Next Milestones
 
-- <task> (target: <date>)
-- <task> (target: <date>)
+- Add smoke/integration tests and enforce in CI.
+- Add caching and better API resilience controls.
+- Prepare a production deployment target with environment hardening.
 
 ## Architecture Notes
 
-See `ARCHITECTURE.md` for full detail. Key points:
+See [ARCHITECTURE.md](ARCHITECTURE.md) for details. Current core choices:
 
-- <key architectural decision>
-- <key dependency>
+- Single TypeScript stack (React frontend + Express backend).
+- External API proxy in `server.ts` to manage CORS, fallback, and timeout behavior.
+- Deterministic Truth Index calculation in `src/services/intelligence.ts`.
 
 ## Key Dependencies
 
-- `<repo>` — <why this depends on it>
+- NewsAPI: primary article ingestion source.
+- Google Gemini API: analysis and translation intelligence.
+- Google Maps Platform: geospatial UI rendering.
+- X API (optional): social context enrichment.

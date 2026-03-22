@@ -11,21 +11,21 @@ How we track work, manage priorities, and coordinate contributions.
   - `good first issue`: Ideal for new contributors.
 
 ## 🗺️ Milestones & Roadmap
-- We work in 2-week "sprints" tracks via Milestones.
+- Work is grouped in lightweight milestone batches (typically 1-2 weeks).
 - Major releases are tracked in the [Roadmap](../../ROADMAP.md).
 
 ## 🧐 PR Reviews
-- **Approval**: At least one approval from a CODEOWNER is required.
+- **Approval**: At least one maintainer approval is required.
 - **AI-assisted PRs**: Require a human sponsor and at least one additional reviewer.
 - **Tone**: Be helpful and respectful. Goal is code quality, not "winning".
 - **Timeline**: Aim to review PRs within 48 hours.
 
 ## 🔒 Branch Protection (Repo Settings)
-- **Protected branches**: `main`, `release/*`
+- **Protected branches**: `master` (and release branches if introduced)
 - **Required reviews**: CODEOWNER review + required checks
 - **No direct pushes**: PRs only, squash merge
 - **Status checks**: CI, security scan, lint/test as applicable
 
 ## 🗓️ Communication
 - **Async First**: Use GitHub Issues/Discussions for most things.
-- **Sync**: Weekly sync on [Insert Day/Time] (if applicable).
+- **Sync**: Use ad hoc maintainer sync when release-critical changes are underway.

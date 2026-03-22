@@ -1,28 +1,37 @@
-# Environments — <repo-name>
-
-> ⚠️ **This is a template file.** Document actual environments below and remove this notice.
+# Environments - Veritas News Hub
 
 ## Environment Overview
 
 | Environment | URL / Location | Purpose |
 |-------------|---------------|--------|
-| Development | `localhost` | Local development |
-| Staging | <URL> | Pre-production testing |
-| Production | <URL> | Live system |
+| Development | `http://localhost:3000` | Local development with Express + Vite middleware |
+| Staging | Not configured | Pre-production validation |
+| Production | Not configured | Live deployment target |
 
 ## Environment Variables
 
 | Variable | Required | Description | Example |
 |----------|----------|-------------|--------|
-| `<VAR_NAME>` | Yes / No | <description> | `<example value>` |
+| `GEMINI_API_KEY` | Yes | Gemini analysis and translation | `AIza...` |
+| `GOOGLE_MAPS_PLATFORM_KEY` | Yes | Map rendering and geospatial layer | `AIza...` |
+| `NEWS_API_KEY` | Yes | News ingestion API access | `123abc...` |
+| `TWITTER_BEARER_TOKEN` | No | Optional X/Twitter social search | `AAAA...` |
+| `GROK_API_KEY` | No | Optional secondary analysis provider | `xai-...` |
+| `NODE_ENV` | No | Runtime mode (`development`/`production`) | `development` |
 
 ## Configuration Files
 
 | File | Environment | Purpose |
 |------|-------------|--------|
-| `.env.example` | All | Template for local env vars |
-| `<file>` | <env> | <purpose> |
+| `.env.local` (inside `veritas-global-intelligence`) | Development | Local secrets and API credentials |
+| `veritas-global-intelligence/package.json` | All | Script/runtime configuration |
+| `veritas-global-intelligence/vite.config.ts` | Build/runtime | Frontend build behavior |
 
 ## Deployment Notes
 
-<describe how deployment works>
+Production deployment target is not finalized in this repository yet.
+
+Current runtime assumptions:
+- App entrypoint is `veritas-global-intelligence/server.ts`.
+- Server listens on port `3000`.
+- In production mode, static assets are served from `dist`.
